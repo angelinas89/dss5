@@ -24,8 +24,8 @@ public class Flight {
         height = flight1.getHeight() / 3;
 
         // приведение размера самолёта совместимым с другими экранами
-        width = (int)(width * 1920f / screenX);
-        height = (int)(height * 1080f / screenY);
+        width = (int) (width * 1920f / screenX);
+        height = (int) (height * 1080f / screenY);
 
         // изменение размера изображения самолёта, где width и height соответственно ширина и высота
         flight1 = Bitmap.createScaledBitmap(flight1, width, height, false);
@@ -42,7 +42,7 @@ public class Flight {
         if (wingCounter == 0) {
             wingCounter++;
             return flight1;
-        } else if(wingCounter > 0) {
+        } else if (wingCounter > 0) {
             wingCounter--;
             return flight2;
         }
@@ -91,3 +91,6 @@ public class Flight {
         this.height = height;
     }
 }
+
+
+

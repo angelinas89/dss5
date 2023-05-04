@@ -6,10 +6,10 @@ import android.graphics.Paint;
 import android.view.MotionEvent;
 import android.view.SurfaceView;
 
-public class GameView extends SurfaceView implements Runnable{
+public class GameView extends SurfaceView implements Runnable {
 
     // поля
-    private  Thread thread; // поле нового потока
+    private Thread thread; // поле нового потока
     private boolean isPlaying; // поле запуска и приостановления игры
     private Background background1, background2; // поля работы с фоном (необходимо два, что было непрерывное движение фона)
     private int screenX, screenY; // поля размеров экрана по осям X и Y
@@ -50,11 +50,12 @@ public class GameView extends SurfaceView implements Runnable{
             sleep();
         }
     }
+
     // метод обновления потока
     private void update() {
         // сдвиг фона по оси X на 10 пикселей и преобразование для совместимости разных экранов
-        background1.setX(background1.getX() - (int)(10 * screenRatioX));
-        background2.setX(background2.getX() - (int)(10 * screenRatioX));
+        background1.setX(background1.getX() - (int) (10 * screenRatioX));
+        background2.setX(background2.getX() - (int) (10 * screenRatioX));
 
         if ((background1.getX() + background1.getBackground().getWidth()) <= 0) { // если фон 1 полностью исчез с экрана
             background1.setX(screenX); // то обновление x до размера ширины фона
@@ -65,9 +66,9 @@ public class GameView extends SurfaceView implements Runnable{
 
         // задание скорости подъёма и снижения самолёта
         if (flight.isGoingUp()) { // условие подъёма
-            flight.setY(flight.getY() - (int)(30 * screenRatioY));
+            flight.setY(flight.getY() - (int) (30 * screenRatioY));
         } else { // условие снижения
-            flight.setY(flight.getY() + (int)(30 * screenRatioY));
+            flight.setY(flight.getY() + (int) (30 * screenRatioY));
         }
         // задание порога значений местоположения самолёта
         if (flight.getY() < 0) { // запрет на снижение меньше нуля
@@ -114,6 +115,7 @@ public class GameView extends SurfaceView implements Runnable{
         // запуск потока
         thread.start();
     }
+
     // метод паузы потока
     public void pauseThread() {
         try {
@@ -134,7 +136,6 @@ public class GameView extends SurfaceView implements Runnable{
     // метод обработки касания экрана (для управления самолётом)
     @Override
     public boolean onTouchEvent(MotionEvent event) {
-
         // обработка событий касания экрана
         switch (event.getAction()) {
             case MotionEvent.ACTION_DOWN: // нажатие
@@ -142,19 +143,19 @@ public class GameView extends SurfaceView implements Runnable{
                 if (event.getX() < (screenX / 2)) {
                     // то движение самолёта вверх
                     flight.setGoingUp(true);
-                } else if (event.getX() >= (screenX / 2)){
-
+                } else if (event.getX() >= (screenX / 2)) {
+                    // иначе движение самолета вниз
                 }
                 break;
             case MotionEvent.ACTION_MOVE: // движение по экрану
-
                 break;
             case MotionEvent.ACTION_UP: // отпускание
                 // при отпускании экрана самолёт начнёт снижаться
                 flight.setGoingUp(false);
+                // установить положение самолета по центру экрана по оси Y
+                flight.setY(screenY / 2);
                 break;
         }
-
         return true; // активация обработки касания экрана
     }
 }
